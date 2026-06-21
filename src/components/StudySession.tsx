@@ -60,7 +60,7 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
     }
   };
 
-  // キーボードショートカット: Space=次の開示, 1〜4=自己評価
+  // キーボードショートカット: Space=次の開示 / H=ヒント / A=答え / P=音声再生 / 1〜4=自己評価
   useEffect(() => {
     if (finished || !card) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -73,6 +73,23 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
         else if (!showAnswer) revealAnswer();
         return;
       }
+
+      const key = event.key.toLowerCase();
+      if (key === "h" && !showHint) {
+        event.preventDefault();
+        setShowHint(true);
+        return;
+      }
+      if (key === "a" && !showAnswer) {
+        event.preventDefault();
+        revealAnswer();
+        return;
+      }
+      if (key === "p" && showAnswer && speech.supported) {
+        event.preventDefault();
+        speech.speak(card.answerEn);
+        return;
+      }
       if (showAnswer && ["1", "2", "3", "4"].includes(event.key)) {
         event.preventDefault();
         handleRating(ratings[Number(event.key) - 1]);
@@ -81,7 +98,7 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finished, card, showHint, showAnswer]);
+  }, [finished, card, showHint, showAnswer, speech]);
 
   if (finished) {
     return (
@@ -127,8 +144,9 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
         {/* ヒント（パターン＋手がかり語）: ボタンで開く */}
         <div className="mt-3">
           {!showHint ? (
-            <button type="button" onClick={() => setShowHint(true)} className="focus-ring min-h-12 w-full rounded-xl border border-line bg-white px-5 py-3 font-bold text-ink/75 transition hover:border-mint hover:text-mint-deep">
+            <button type="button" onClick={() => setShowHint(true)} className="focus-ring flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-5 py-3 font-bold text-ink/75 transition hover:border-mint hover:text-mint-deep">
               ヒントを見る
+              <kbd className="rounded border border-current px-1.5 text-[10px] font-bold opacity-50">H</kbd>
             </button>
           ) : (
             <div className="animate-reveal-up rounded-xl border border-line bg-white p-4">
@@ -147,8 +165,9 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
         </div>
 
         {!showAnswer ? (
-          <button type="button" onClick={revealAnswer} className="focus-ring mt-4 min-h-14 w-full rounded-xl bg-mint px-5 py-4 text-lg font-black text-white shadow-soft transition hover:bg-mint-deep hover:shadow-lift">
+          <button type="button" onClick={revealAnswer} className="focus-ring mt-4 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-mint px-5 py-4 text-lg font-black text-white shadow-soft transition hover:bg-mint-deep hover:shadow-lift">
             答えを見る
+            <kbd className="rounded border border-white/50 px-1.5 text-[11px] font-bold opacity-80">A</kbd>
           </button>
         ) : (
           <div className="mt-4 space-y-6">
@@ -159,14 +178,18 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
                   <p className="mt-2 text-2xl font-black leading-snug text-ink">{card.answerEn}</p>
                 </div>
                 {speech.supported && (
-                  <button
-                    type="button"
-                    onClick={() => speech.speak(card.answerEn)}
-                    aria-label="模範解答を音声で聞く"
-                    className={`focus-ring flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-mint text-white transition hover:bg-mint-deep ${speech.speaking ? "animate-pulse" : ""}`}
-                  >
-                    <span aria-hidden className="text-xl">🔊</span>
-                  </button>
+                  <div className="flex shrink-0 flex-col items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => speech.speak(card.answerEn)}
+                      aria-label="模範解答を音声で聞く"
+                      title="再生 (P)"
+                      className={`focus-ring flex h-12 w-12 items-center justify-center rounded-full bg-mint text-white transition hover:bg-mint-deep ${speech.speaking ? "animate-pulse" : ""}`}
+                    >
+                      <span aria-hidden className="text-xl">🔊</span>
+                    </button>
+                    <kbd className="rounded border border-mint/40 px-1.5 text-[10px] font-bold text-mint-deep opacity-70">P</kbd>
+                  </div>
                 )}
               </div>
               {!speech.supported && (
