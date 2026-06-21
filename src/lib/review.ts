@@ -2,37 +2,41 @@ import type { Rating, ReviewState } from "@/types";
 
 export const ratingLabels: Record<Rating, string> = {
   again: "もう一度",
-  almost: "惜しい",
-  good: "できた",
-  easy: "すぐ言えた"
-};
-
-export const ratingDescriptions: Record<Rating, string> = {
-  again: "10分後",
-  almost: "1日後",
-  good: "理解して言えた",
-  easy: "迷わず言えた"
+  almost: "あいまい",
+  good: "言えた",
+  easy: "スラスラ"
 };
 
 const minutes = (value: number) => value * 60 * 1000;
 const days = (value: number) => value * 24 * 60 * 60 * 1000;
 
-export const getGoodEasyIntervalMs = (successStreak: number) => {
-  if (successStreak <= 0) return days(3);
-  if (successStreak === 1) return days(7);
-  if (successStreak === 2) return days(14);
-  return days(30);
+export const getGoodEasyIntervalMs = (rating: "good" | "easy", successStreak: number) => {
+  const base =
+    successStreak <= 0 ? days(3) : successStreak === 1 ? days(7) : successStreak === 2 ? days(14) : days(30);
+  // easy は good より一段先まで定着しているとみなし、間隔を長めにする
+  return rating === "easy" ? base * 2 : base;
 };
 
-export const getNextReviewDate = (rating: Rating, successStreak: number, now = new Date()) => {
-  const interval =
-    rating === "again"
-      ? minutes(10)
-      : rating === "almost"
-        ? days(1)
-        : getGoodEasyIntervalMs(successStreak);
+export const getNextReviewIntervalMs = (rating: Rating, successStreak: number) =>
+  rating === "again"
+    ? minutes(10)
+    : rating === "almost"
+      ? days(1)
+      : getGoodEasyIntervalMs(rating, successStreak);
 
-  return new Date(now.getTime() + interval);
+export const getNextReviewDate = (rating: Rating, successStreak: number, now = new Date()) =>
+  new Date(now.getTime() + getNextReviewIntervalMs(rating, successStreak));
+
+// 自己評価ボタンのサブ表記「次にいつ復習するか」を全段階で統一して返す
+export const formatNextInterval = (rating: Rating, successStreak: number) => {
+  const ms = getNextReviewIntervalMs(rating, successStreak);
+  const dayMs = days(1);
+  if (ms < dayMs) {
+    const mins = Math.round(ms / minutes(1));
+    return `約${mins}分後`;
+  }
+  const dayCount = Math.round(ms / dayMs);
+  return `${dayCount}日後`;
 };
 
 export const buildNextReviewState = (
