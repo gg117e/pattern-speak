@@ -2,13 +2,6 @@
 
 import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
 
-export type SpeechRate = "normal" | "slow";
-
-const rateValue: Record<SpeechRate, number> = {
-  normal: 1,
-  slow: 0.72
-};
-
 const subscribeToSpeechSupport = () => () => {};
 const getSpeechSupportSnapshot = () =>
   typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
@@ -20,7 +13,6 @@ export const useSpeech = () => {
     getSpeechSupportSnapshot,
     getServerSpeechSupportSnapshot
   );
-  const [rate, setRate] = useState<SpeechRate>("normal");
   const [speaking, setSpeaking] = useState(false);
 
   const speak = useCallback(
@@ -30,14 +22,14 @@ export const useSpeech = () => {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
-      utterance.rate = rateValue[rate];
+      utterance.rate = 1;
       utterance.pitch = 1;
       utterance.onstart = () => setSpeaking(true);
       utterance.onend = () => setSpeaking(false);
       utterance.onerror = () => setSpeaking(false);
       window.speechSynthesis.speak(utterance);
     },
-    [rate, supported]
+    [supported]
   );
 
   const stop = useCallback(() => {
@@ -46,8 +38,5 @@ export const useSpeech = () => {
     setSpeaking(false);
   }, [supported]);
 
-  return useMemo(
-    () => ({ supported, rate, setRate, speak, stop, speaking }),
-    [rate, speak, speaking, stop, supported]
-  );
+  return useMemo(() => ({ supported, speak, stop, speaking }), [speak, speaking, stop, supported]);
 };
