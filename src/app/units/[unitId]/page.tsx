@@ -2,10 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cards } from "@/data/cards";
 import { sectionMap } from "@/data/sections";
-import { unitMap } from "@/data/units";
+import { unitMap, units } from "@/data/units";
 import { PrimaryLink } from "@/components/PrimaryLink";
 
 type UnitPageProps = { params: Promise<{ unitId: string }> };
+
+export function generateStaticParams() {
+  return units.map((unit) => ({ unitId: unit.id }));
+}
 
 export default async function UnitPage({ params }: UnitPageProps) {
   const { unitId } = await params;
