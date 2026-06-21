@@ -1,9 +1,13 @@
 import { notFound } from "next/navigation";
 import { cards } from "@/data/cards";
-import { unitMap } from "@/data/units";
+import { unitMap, units } from "@/data/units";
 import { StudySession } from "@/components/StudySession";
 
 type StudyPageProps = { params: Promise<{ unitId: string }> };
+
+export function generateStaticParams() {
+  return units.map((unit) => ({ unitId: unit.id }));
+}
 
 export default async function StudyPage({ params }: StudyPageProps) {
   const { unitId } = await params;

@@ -48,3 +48,34 @@ npm.cmd run build
 ## 学習フロー
 
 日本語を見る、表現パターンを確認する、口で英語を言う、答えを見る、音声を聞く、自己評価する、という順番で進めます。
+
+## GitHub Pages での公開
+
+このアプリはサーバー機能を使わない静的サイトとして書き出せるため、GitHub Pages で公開できます。
+
+設定の概要:
+
+- `next.config.ts`: `output: "export"` で静的書き出し。本番ビルド時のみ `basePath: "/pattern-speak"` を付与
+- 各動的ルートに `generateStaticParams` を定義し、全ページを事前生成
+- `public/.nojekyll`: GitHub Pages が `_next` フォルダを無視しないようにする
+- `.github/workflows/deploy.yml`: `main` への push で自動ビルド & デプロイ
+
+### 公開手順
+
+1. GitHub リポジトリの Settings → Pages を開く
+2. **Source** を **GitHub Actions** に設定する
+3. `main` ブランチに push すると、ワークフローが自動でビルドしてデプロイする
+
+公開URL:
+
+```text
+https://gg117e.github.io/pattern-speak/
+```
+
+ローカルで本番ビルドを確認する場合:
+
+```powershell
+npm.cmd run build
+```
+
+書き出し結果は `out/` フォルダに生成されます。

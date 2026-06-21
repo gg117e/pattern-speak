@@ -9,6 +9,10 @@ type SectionPageProps = { params: Promise<{ section: string }> };
 
 const isSection = (value: string): value is Section => value === "core" || value === "daily" || value === "business";
 
+export function generateStaticParams() {
+  return (["core", "daily", "business"] satisfies Section[]).map((section) => ({ section }));
+}
+
 export default async function SectionPage({ params }: SectionPageProps) {
   const { section: rawSection } = await params;
   if (!isSection(rawSection)) notFound();
