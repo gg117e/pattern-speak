@@ -19,7 +19,7 @@ export default function HomePage() {
 
       <ProgressSnapshot />
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {sections.map((section) => {
           const unitCount = units.filter((unit) => unit.section === section.id).length;
           const cardCount = cards.filter((card) => card.section === section.id).length;
@@ -32,6 +32,20 @@ export default function HomePage() {
             </Link>
           );
         })}
+      </section>
+
+      <section className="grid gap-3 sm:grid-cols-3">
+        <Link href="/practice" className="focus-ring rounded-lg border border-mint bg-mint/5 p-5 shadow-soft transition hover:-translate-y-0.5">
+          <div className="text-xl font-black text-mint-deep">ランダム練習</div>
+          <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">章と問題数を選んで、好きなときにランダム出題で練習します。</p>
+          <div className="mt-4 text-sm font-bold text-mint-deep">Start Practice</div>
+        </Link>
+
+        <Link href="/vocab" className="focus-ring rounded-lg border border-amber bg-amber/5 p-5 shadow-soft transition hover:-translate-y-0.5">
+          <div className="text-xl font-black text-ink">単語学習</div>
+          <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">日常語彙を意味→英単語で覚え、例文と音声で定着させます。</p>
+          <div className="mt-4 text-sm font-bold text-amber">Start Vocab</div>
+        </Link>
 
         <Link href="/review" className="focus-ring rounded-lg border border-ink bg-ink p-5 text-white shadow-soft transition hover:-translate-y-0.5">
           <div className="text-xl font-black">Review</div>

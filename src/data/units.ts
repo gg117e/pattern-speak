@@ -18,7 +18,12 @@ const dailyPatterns = [
   ["daily-i-like", "I like ...", "私は〜が好きです", "好きなものや好きな行動を簡単に話します。"],
   ["daily-im-into", "I'm into ...", "私は〜にはまっています", "最近の興味や趣味を自然な会話で伝えます。"],
   ["daily-i-went-to", "I went to ...", "私は〜へ行きました", "週末や最近行った場所について話します。"],
-  ["daily-that-sounds", "That sounds ...", "それは〜そうですね", "相手の話に反応し、会話を続ける表現です。"]
+  ["daily-that-sounds", "That sounds ...", "それは〜そうですね", "相手の話に反応し、会話を続ける表現です。"],
+  ["daily-im-planning-to", "I'm planning to ...", "私は〜する予定です", "週末や今後の予定を自然に伝えます。"],
+  ["daily-how-was", "How was ...?", "〜はどうでしたか", "相手の出来事をたずねて会話を広げます。"],
+  ["daily-do-you-want-to", "Do you want to ...?", "〜しませんか", "相手を誘ったり提案したりする表現です。"],
+  ["daily-i-feel-like", "I feel like ...", "〜したい気分です", "今の気分や軽い希望を伝えます。"],
+  ["daily-have-you-ever", "Have you ever ...?", "〜したことはありますか", "経験をたずねて話題を引き出します。"]
 ];
 
 const businessPatterns = [
