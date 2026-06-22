@@ -26,6 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <nav className="flex flex-wrap items-center justify-end gap-x-1 text-sm font-semibold">
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/practice">Practice</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/dialogue">Dialogue</Link>
+              <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/speak">Speak</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/vocab">Vocab</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/review">Review</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/stats">Stats</Link>

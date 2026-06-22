@@ -50,6 +50,12 @@ export default function HomePage() {
           <div className="mt-4 text-sm font-bold text-mint-deep">Start Dialogue</div>
         </Link>
 
+        <Link href="/speak" className="focus-ring rounded-lg border border-mint bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-mint">
+          <div className="text-xl font-black text-ink">意見スピーチ</div>
+          <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">意見→理由→例→まとめの順に、自分の考えを数文で話す練習をします。</p>
+          <div className="mt-4 text-sm font-bold text-mint-deep">Start Speak</div>
+        </Link>
+
         <Link href="/vocab" className="focus-ring rounded-lg border border-amber bg-amber/5 p-5 shadow-soft transition hover:-translate-y-0.5">
           <div className="text-xl font-black text-ink">単語学習</div>
           <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">日常語彙を意味→英単語で覚え、例文と音声で定着させます。</p>

@@ -8,7 +8,7 @@ import {
   setDailyGoal,
   subscribeToActivity
 } from "@/lib/storage";
-import { computeStreak, getTodayCount } from "@/lib/streak";
+import { computeLongestStreak, computeStreak, getTodayCount } from "@/lib/streak";
 
 const emptyActivity = () => "{}";
 const defaultGoal = () => "20";
@@ -32,8 +32,15 @@ export function DailyGoalCard() {
 
   const todayCount = getTodayCount(activityMap);
   const streak = computeStreak(activityMap);
+  const longest = computeLongestStreak(activityMap);
   const percent = Math.min(100, Math.round((todayCount / goal) * 100));
   const reached = todayCount >= goal;
+  const reminder =
+    todayCount === 0
+      ? "今日はまだ学習していません。1問から始めましょう。"
+      : reached
+        ? "今日の目標を達成しました 🎉"
+        : `あと ${goal - todayCount} 問で今日の目標達成です。`;
 
   return (
     <section className="rounded-2xl border border-line bg-white p-5 shadow-soft">
@@ -49,12 +56,15 @@ export function DailyGoalCard() {
         <div className="text-right">
           <div className="text-xs font-bold uppercase tracking-wide text-ink/55">連続</div>
           <div className="mt-1 text-2xl font-black text-amber">🔥 {streak}<span className="text-base font-bold text-ink/45"> 日</span></div>
+          <div className="mt-0.5 text-xs font-bold text-mint-deep">🏆 最長 {longest} 日</div>
         </div>
       </div>
 
       <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-line/70" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
         <div className={`h-full rounded-full transition-all duration-300 ${reached ? "bg-mint" : "bg-amber"}`} style={{ width: `${percent}%` }} />
       </div>
+
+      <p className={`mt-2 text-sm font-semibold ${reached ? "text-mint-deep" : "text-ink/60"}`}>{reminder}</p>
 
       <div className="mt-3 flex items-center justify-end gap-2 text-sm">
         <span className="font-semibold text-ink/55">1日の目標</span>
