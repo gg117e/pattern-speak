@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { formatNextInterval, ratingLabels, buildNextReviewState } from "@/lib/review";
-import { getVocabStateMap, upsertVocabState } from "@/lib/storage";
+import { getVocabStateMap, recordActivity, upsertVocabState } from "@/lib/storage";
 import { useSpeech } from "@/hooks/useSpeech";
 import type { Rating, VocabWord } from "@/types";
 
@@ -45,6 +45,7 @@ export function VocabSession({ words, title, emptyMessage = "単語がありま�
     const previous = getVocabStateMap()[word.id];
     const nextState = buildNextReviewState(word.id, rating, previous);
     upsertVocabState(nextState);
+    recordActivity();
 
     speech.stop();
     setShowAnswer(false);
