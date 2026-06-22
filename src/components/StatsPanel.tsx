@@ -7,6 +7,7 @@ import { isDue, ratingLabels } from "@/lib/review";
 import { vocabWords } from "@/data/vocab";
 import type { Rating, ReviewState } from "@/types";
 import { SectionProgress } from "./SectionProgress";
+import { DailyGoalCard } from "./DailyGoalCard";
 
 const ratings: Rating[] = ["again", "almost", "good", "easy"];
 const emptySnapshot = () => "[]";
@@ -36,6 +37,8 @@ export function StatsPanel() {
 
   return (
     <div className="space-y-6">
+      <DailyGoalCard />
+
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-lg border border-line bg-white p-4 shadow-soft"><div className="text-sm font-semibold text-ink/55">学習済みカード</div><div className="mt-2 text-3xl font-black">{summary.learnedCount}</div></div>
         <div className="rounded-lg border border-line bg-white p-4 shadow-soft"><div className="text-sm font-semibold text-ink/55">復習回数</div><div className="mt-2 text-3xl font-black">{history.length}</div></div>

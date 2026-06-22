@@ -4,6 +4,7 @@ import { sections } from "@/data/sections";
 import { units } from "@/data/units";
 import { PrimaryLink } from "@/components/PrimaryLink";
 import { ProgressSnapshot } from "@/components/ProgressSnapshot";
+import { DailyGoalCard } from "@/components/DailyGoalCard";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,8 @@ export default function HomePage() {
           日常会話とビジネス会話を分けて学び、復習では全カードをまとめて扱います。
         </p>
       </section>
+
+      <DailyGoalCard />
 
       <ProgressSnapshot />
 
@@ -34,11 +37,17 @@ export default function HomePage() {
         })}
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Link href="/practice" className="focus-ring rounded-lg border border-mint bg-mint/5 p-5 shadow-soft transition hover:-translate-y-0.5">
           <div className="text-xl font-black text-mint-deep">ランダム練習</div>
           <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">章と問題数を選んで、好きなときにランダム出題で練習します。</p>
           <div className="mt-4 text-sm font-bold text-mint-deep">Start Practice</div>
+        </Link>
+
+        <Link href="/dialogue" className="focus-ring rounded-lg border border-mint bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-mint">
+          <div className="text-xl font-black text-ink">ミニ対話</div>
+          <p className="mt-2 min-h-12 text-sm leading-6 text-ink/65">学んだ型をつなげて、短い会話として口に出す練習をします。</p>
+          <div className="mt-4 text-sm font-bold text-mint-deep">Start Dialogue</div>
         </Link>
 
         <Link href="/vocab" className="focus-ring rounded-lg border border-amber bg-amber/5 p-5 shadow-soft transition hover:-translate-y-0.5">

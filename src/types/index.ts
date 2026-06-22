@@ -51,3 +51,17 @@ export type VocabWord = {
   category: string;
   tags?: string[];
 };
+
+export type DialogueTurn = {
+  speaker: "you" | "partner";
+  ja: string;
+  en: string;
+  pattern?: string;
+};
+
+export type Dialogue = {
+  id: string;
+  title: string;
+  sceneJa: string;
+  turns: DialogueTurn[];
+};

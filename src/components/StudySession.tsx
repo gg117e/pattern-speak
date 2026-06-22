@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { formatNextInterval, ratingLabels, buildNextReviewState } from "@/lib/review";
-import { addReviewHistory, getReviewStateMap, upsertReviewState } from "@/lib/storage";
+import { addReviewHistory, getReviewStateMap, recordActivity, upsertReviewState } from "@/lib/storage";
 import { useSpeech } from "@/hooks/useSpeech";
 import type { Card, Rating } from "@/types";
 
@@ -48,6 +48,7 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
     const nextState = buildNextReviewState(card.id, rating, previous);
     upsertReviewState(nextState);
     addReviewHistory(nextState);
+    recordActivity();
 
     speech.stop();
     setShowHint(false);

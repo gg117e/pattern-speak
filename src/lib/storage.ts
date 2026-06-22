@@ -1,10 +1,14 @@
 "use client";
 
 import type { ReviewState } from "@/types";
+import { todayKey } from "./streak";
 
 const REVIEW_STATES_KEY = "speaking-pattern-practice.reviewStates.v1";
 const REVIEW_HISTORY_KEY = "speaking-pattern-practice.reviewHistory.v1";
 const VOCAB_STATES_KEY = "speaking-pattern-practice.vocabStates.v1";
+const ACTIVITY_KEY = "speaking-pattern-practice.activity.v1";
+const DAILY_GOAL_KEY = "speaking-pattern-practice.dailyGoal.v1";
+const DEFAULT_DAILY_GOAL = 20;
 const STORAGE_EVENT = "speaking-pattern-practice.storage";
 
 const canUseStorage = () => typeof window !== "undefined" && Boolean(window.localStorage);
@@ -100,4 +104,34 @@ export const upsertVocabState = (nextState: ReviewState) => {
 
   saveVocabStates(nextStates);
   return nextStates;
+};
+
+// 全アクティビティ共通の活動ログ（日付 -> 学習回数）。目標・ストリークの集計に使う。
+export const subscribeToActivity = subscribeToReviewStorage;
+
+export const getActivitySnapshot = () => {
+  if (!canUseStorage()) return "{}";
+  return window.localStorage.getItem(ACTIVITY_KEY) ?? "{}";
+};
+
+export const getActivityMap = (): Record<string, number> => readJson<Record<string, number>>(ACTIVITY_KEY, {});
+
+export const recordActivity = (count = 1) => {
+  const map = getActivityMap();
+  const key = todayKey();
+  writeJson(ACTIVITY_KEY, { ...map, [key]: (map[key] ?? 0) + count });
+};
+
+export const getDailyGoalSnapshot = () => {
+  if (!canUseStorage()) return String(DEFAULT_DAILY_GOAL);
+  return window.localStorage.getItem(DAILY_GOAL_KEY) ?? String(DEFAULT_DAILY_GOAL);
+};
+
+export const getDailyGoal = (): number => {
+  const value = readJson<number>(DAILY_GOAL_KEY, DEFAULT_DAILY_GOAL);
+  return Number.isFinite(value) && value > 0 ? value : DEFAULT_DAILY_GOAL;
+};
+
+export const setDailyGoal = (goal: number) => {
+  writeJson(DAILY_GOAL_KEY, Math.max(1, Math.round(goal)));
 };
