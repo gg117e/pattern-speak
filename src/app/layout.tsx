@@ -23,7 +23,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 pb-8 pt-4 sm:px-6">
           <header className="mb-5 flex items-center justify-between gap-3 rounded-lg border border-line bg-white/80 px-4 py-3 shadow-soft backdrop-blur">
             <Link href="/" className="focus-ring rounded-md text-base font-bold text-ink sm:text-lg">Pattern Speak</Link>
-            <nav className="flex items-center gap-2 text-sm font-semibold">
+            <nav className="flex items-center gap-1 text-sm font-semibold sm:gap-2">
+              <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/practice">Practice</Link>
+              <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/vocab">Vocab</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/review">Review</Link>
               <Link className="focus-ring rounded-md px-2 py-2 text-ink/75 hover:text-ink" href="/stats">Stats</Link>
             </nav>

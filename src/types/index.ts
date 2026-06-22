@@ -41,3 +41,13 @@ export type SectionInfo = {
   shortName: string;
   description: string;
 };
+
+export type VocabWord = {
+  id: string;
+  word: string;
+  meaningJa: string;
+  exampleEn: string;
+  exampleJa: string;
+  category: string;
+  tags?: string[];
+};
