@@ -20,9 +20,10 @@
 - **学習画面**: 日本語を見て英語で言い、ヒント・答え・音声・自己評価で確認します（キーボードショートカット対応）。
 - **ランダム練習** (`/practice`): 章（Core / Daily / Business / 全部）と問題数を選んでランダム出題します。
 - **ミニ対話** (`/dialogue`): 学んだ型をつなげ、相手とのやり取りを短い会話として口に出します。
+- **意見スピーチ** (`/speak`): 1つのテーマを「意見 → 理由 → 例 → まとめ」(PREP) で組み立て、自分の考えを数文でまとめて話します。
 - **単語学習** (`/vocab`): 日常頻出語を「意味 → 英単語・例文」で覚え、音声と自己評価で定着させます。
 - **復習** (`/review`): 復習期限が来たカードを全セクションからまとめて練習します。
-- **1日の目標・ストリーク**: 毎日の学習回数を記録し、目標達成度と連続学習日数（🔥）を表示します。
+- **1日の目標・ストリーク**: 毎日の学習回数を記録し、目標達成度・連続学習日数（🔥）・最長記録（🏆）・学習カレンダー（ヒートマップ）を表示します。
 - **学習状況** (`/stats`): カード・単語の進捗や自己評価の回数を確認できます。
 
 学習履歴・目標・ストリークはすべてブラウザの localStorage に保存され、サーバーには送信されません。
@@ -50,13 +51,14 @@ http://127.0.0.1:3000
 - `src/data/cards.ts`: 250枚のカードデータ
 - `src/data/vocab.ts`: 単語学習用の語彙データ
 - `src/data/dialogues.ts`: ミニ対話のデータ
+- `src/data/speeches.ts`: 意見スピーチ（PREP）のお題データ
 - `src/lib/review.ts`: 復習間隔ロジック
 - `src/lib/streak.ts`: 連続学習日数・当日の学習数の集計
 - `src/lib/storage.ts`: localStorageの保存処理（学習履歴・活動ログ・目標）
 - `src/hooks/useSpeech.ts`: Web Speech APIの読み上げ処理
 - `src/components/StudySession.tsx`: 学習画面の中心コンポーネント
-- `src/components/PracticeDeck.tsx` / `VocabDeck.tsx` / `DialogueDeck.tsx`: 各練習モードの入口
-- `src/components/DailyGoalCard.tsx`: 1日の目標・ストリーク表示
+- `src/components/PracticeDeck.tsx` / `VocabDeck.tsx` / `DialogueDeck.tsx` / `SpeechDeck.tsx`: 各練習モードの入口
+- `src/components/DailyGoalCard.tsx` / `StreakCalendar.tsx`: 1日の目標・ストリーク・学習カレンダー表示
 
 ## 確認コマンド
 

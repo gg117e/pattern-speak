@@ -65,3 +65,19 @@ export type Dialogue = {
   sceneJa: string;
   turns: DialogueTurn[];
 };
+
+// 意見ビルダー（PREP）。1テーマを「意見→理由→例→まとめ」の数文で組み立てる。
+export type SpeechStep = {
+  label: string; // 意見 / 理由 / 例 / まとめ
+  ja: string; // 日本語ガイド
+  en: string; // モデル英文
+  connector?: string; // 文頭で使うつなぎ語のヒント
+};
+
+export type SpeechTopic = {
+  id: string;
+  title: string;
+  questionJa: string;
+  questionEn: string;
+  steps: SpeechStep[];
+};

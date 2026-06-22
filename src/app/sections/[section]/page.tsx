@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { cards } from "@/data/cards";
 import { sectionMap } from "@/data/sections";
 import { units } from "@/data/units";
+import { UnitProgressBadge } from "@/components/Checkmarks";
 import type { Section } from "@/types";
 
 type SectionPageProps = { params: Promise<{ section: string }> };
@@ -30,14 +31,17 @@ export default async function SectionPage({ params }: SectionPageProps) {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {sectionUnits.map((unit, index) => {
-          const cardCount = cards.filter((card) => card.unitId === unit.id).length;
+          const unitCardIds = cards.filter((card) => card.unitId === unit.id).map((card) => card.id);
           return (
             <Link key={unit.id} href={`/units/${unit.id}`} className="focus-ring rounded-lg border border-line bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-mint">
-              <div className="text-sm font-bold text-ink/45">Unit {index + 1}</div>
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-sm font-bold text-ink/45">Unit {index + 1}</div>
+                <UnitProgressBadge cardIds={unitCardIds} />
+              </div>
               <h2 className="mt-2 text-xl font-black">{unit.title}</h2>
               <div className="mt-2 inline-flex rounded-lg bg-mint/10 px-3 py-2 text-sm font-bold text-mint">{unit.pattern}</div>
               <p className="mt-3 text-sm leading-6 text-ink/65">{unit.description}</p>
-              <div className="mt-4 text-sm font-bold text-ink/60">{cardCount} Cards</div>
+              <div className="mt-4 text-sm font-bold text-ink/60">{unitCardIds.length} Cards</div>
             </Link>
           );
         })}
