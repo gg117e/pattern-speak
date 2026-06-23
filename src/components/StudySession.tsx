@@ -12,6 +12,8 @@ type StudySessionProps = {
   title: string;
   emptyMessage?: string;
   doneHref?: string;
+  nextHref?: string;
+  nextLabel?: string;
 };
 
 const ratings: Rating[] = ["again", "almost", "good", "easy"];
@@ -23,7 +25,7 @@ const ratingStyles: Record<Rating, string> = {
   easy: "border-ink bg-ink text-white hover:bg-ink/90"
 };
 
-export function StudySession({ cards, title, emptyMessage = "カードがありません", doneHref = "/" }: StudySessionProps) {
+export function StudySession({ cards, title, emptyMessage = "カードがありません", doneHref = "/", nextHref, nextLabel }: StudySessionProps) {
   const [index, setIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -107,9 +109,16 @@ export function StudySession({ cards, title, emptyMessage = "カードがあり�
         <p className="text-sm font-bold text-mint">{title}</p>
         <h1 className="mt-3 text-2xl font-black">完了しました 🎉</h1>
         <p className="mt-3 text-ink/65">{cards.length === 0 ? emptyMessage : "今日の分はここまでです。"}</p>
-        <Link href={doneHref} className="focus-ring mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-mint px-6 py-3 font-bold text-white transition hover:bg-mint-deep">
-          戻る
-        </Link>
+        <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          {nextHref && cards.length > 0 && (
+            <Link href={nextHref} className="focus-ring inline-flex min-h-12 items-center justify-center rounded-xl bg-mint px-6 py-3 font-bold text-white transition hover:bg-mint-deep">
+              次のユニットへ{nextLabel ? `：${nextLabel}` : ""} →
+            </Link>
+          )}
+          <Link href={doneHref} className={`focus-ring inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 font-bold transition ${nextHref && cards.length > 0 ? "border border-line bg-white text-ink/70 hover:border-mint" : "bg-mint text-white hover:bg-mint-deep"}`}>
+            {nextHref && cards.length > 0 ? "ユニット一覧へ戻る" : "戻る"}
+          </Link>
+        </div>
       </section>
     );
   }

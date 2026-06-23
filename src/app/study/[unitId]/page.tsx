@@ -15,5 +15,16 @@ export default async function StudyPage({ params }: StudyPageProps) {
   if (!unit) notFound();
 
   const unitCards = cards.filter((card) => card.unitId === unit.id);
-  return <StudySession cards={unitCards} title={unit.title} doneHref={`/units/${unit.id}`} />;
+  const nextUnit = units[units.findIndex((item) => item.id === unit.id) + 1];
+
+  return (
+    <StudySession
+      key={unit.id}
+      cards={unitCards}
+      title={unit.title}
+      doneHref={`/units/${unit.id}`}
+      nextHref={nextUnit ? `/study/${nextUnit.id}` : undefined}
+      nextLabel={nextUnit?.title}
+    />
+  );
 }

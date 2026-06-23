@@ -5,6 +5,7 @@ import { units } from "@/data/units";
 import { PrimaryLink } from "@/components/PrimaryLink";
 import { ProgressSnapshot } from "@/components/ProgressSnapshot";
 import { DailyGoalCard } from "@/components/DailyGoalCard";
+import { ResumeButton } from "@/components/ResumeButton";
 
 export default function HomePage() {
   return (
@@ -70,7 +71,7 @@ export default function HomePage() {
       </section>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <PrimaryLink href="/sections/core">Core Speakingから始める</PrimaryLink>
+        <ResumeButton />
         <PrimaryLink href="/stats" variant="outline">学習状況を見る</PrimaryLink>
       </div>
     </div>
